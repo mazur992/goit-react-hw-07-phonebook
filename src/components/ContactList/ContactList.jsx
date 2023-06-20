@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { contactSelector } from 'components/selectors';
+import { contactSelector } from 'redux/selectors';
 import css from './ContactList.module.css';
-import { delContact } from '../slice';
+import { useEffect } from 'react';
+import { deleteContact, fetchContactsThunk } from '../../redux/thunk';
 
 const ContactList = () => {
   const dispatch = useDispatch();
@@ -9,26 +10,30 @@ const ContactList = () => {
   const getVisibleName = () => {
     if (filter) {
       const normilizeFilter = filter.toLocaleLowerCase();
-
-      return contacts.filter(contact =>
+      return contacts.items.filter(contact =>
         contact.name.toLocaleLowerCase().includes(normilizeFilter)
       );
     }
-    return contacts;
+    return contacts.items;
   };
-  const deleteContact = contactId => {
-    dispatch(delContact({ contactId }));
+  const delContact = contactId => {
+    dispatch(deleteContact(contactId));
   };
+
+  useEffect(() => {
+    dispatch(fetchContactsThunk());
+  }, [dispatch]);
   return (
     <ul>
-      {getVisibleName().map(contact => {
+      {contacts.items.isLoading && <p>Loading...</p>}
+      {getVisibleName().map(item => {
         return (
-          <li className={css.contactItem} key={contact.id}>
-            {contact.name}: {contact.number}
+          <li className={css.contactItem} key={item.id}>
+            {item.name}: {item.phone}
             <button
               className={css.contactBtn}
               type="button"
-              onClick={() => deleteContact(contact.id)}
+              onClick={() => delContact(item.id)}
             >
               Delete
             </button>
