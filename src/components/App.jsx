@@ -1,4 +1,4 @@
-import ContactForm from './ContactForm';
+import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter';
 import ContactList from './ContactList';
 import css from './App.module.css';

@@ -23,6 +23,7 @@ const ContactList = () => {
   useEffect(() => {
     dispatch(fetchContactsThunk());
   }, [dispatch]);
+
   return (
     <ul>
       {contacts.items.isLoading && <p>Loading...</p>}

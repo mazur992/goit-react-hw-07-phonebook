@@ -3,10 +3,10 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   contacts: {
     items: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+      { id: 'id-1', name: 'Rosie Simpson', phone: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', phone: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', phone: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', phone: '227-91-26' },
     ],
     isLoading: false,
     error: '',
@@ -46,6 +46,21 @@ const contactsSlice = createSlice({
       state.contacts.isLoading = false;
       state.contacts.error = payload;
     },
+    addContact: state => {
+      state.contacts.isLoading = true;
+    },
+    addContactSuccess: (state, { payload }) => {
+      state.contacts.isLoading = false;
+      state.contacts.error = '';
+      state.contacts.items.push(payload);
+    },
+    addContactError: (state, { payload }) => {
+      state.contacts.isLoading = false;
+      state.contacts.error = payload;
+    },
+    filterName: (state, { payload }) => {
+      state.filter = payload.value;
+    },
   },
 });
 
@@ -57,4 +72,8 @@ export const {
   deleteContact,
   deleteContactError,
   deleteContactSuccess,
+  addContact,
+  addContactError,
+  addContactSuccess,
+  filterName,
 } = contactsSlice.actions;

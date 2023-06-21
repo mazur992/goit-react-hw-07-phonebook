@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { contactSelector } from 'redux/selectors';
 import { filterName } from '../../redux/slice';
 export default function Filter() {
-  // const { filter } = useSelector(contactSelector);
-  // const dispatch = useDispatch();
+  const { filter } = useSelector(contactSelector);
+  const dispatch = useDispatch();
   const handleNameChange = event => {
     const { value } = event.target;
-    // dispatch(filterName({ value }));
+    dispatch(filterName({ value }));
   };
   return (
     <label className={css.filtrTitle}>
@@ -16,7 +16,7 @@ export default function Filter() {
         className={css.filterInput}
         type="text"
         name="filter"
-        // value={filter}
+        value={filter}
         onChange={handleNameChange}
       />
     </label>
